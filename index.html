@@ -1,0 +1,3087 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OpenCodeInterpreter</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+    </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://kit.fontawesome.com/f8ddf9854a.js" crossorigin="anonymous"></script>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="OpenCodeInterpreter: Integrating Code Generation with Execution and Refinement">
+  <meta name="keywords" content="OpenCodeInterpreter, Code Generation, Large Language Model, artificial intelligence, AI, AGI, artificial general intelligence">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> OpenCodeInterpreter: Integrating Code Generation with Execution and Refinement</title>
+
+  <link rel="icon" href="./static/images/mmmu_icon2.png">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/leaderboard.css">
+
+  <!-- <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator_bulma.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script> -->
+  <script type="text/javascript" src="static/js/sort-table.js" defer></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/question_card.js"></script>
+  <script src="./data/results/data_setting.js" defer></script>
+  <script src="./data/results/model_scores.js" defer></script>
+  <script src="./visualizer/data/data_public.js" defer></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://mmmu-benchmark.github.io/">
+            <b>MMMU</b> <p style="font-size:18px; display: inline; margin-left: 5px;">🔥</p>
+          </a>
+          <a class="navbar-item" href="https://tiger-ai-lab.github.io/MAmmoTH/">
+            <b>MAmmoTH</b> <p style="font-size:18px; display: inline; margin-left: 5px;">🔥</p>
+          </a>
+          <a class="navbar-item" href="https://osu-nlp-group.github.io/TableLlama/">
+            TableLlama 
+            <a class="navbar-item" href="https://osu-nlp-group.github.io/MagicBrush/">
+              MagicBrush
+            </a>
+            <a class="navbar-item" href="https://osu-nlp-group.github.io/Mind2Web/">
+              Mind2Web
+            </a>
+          </a>
+          
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title is-bold">
+            <img src="static/images/mmmu_icon2.png" style="width:1em;vertical-align: middle" alt="Logo"/> 
+            <span class="opencodeinterpreter" style="vertical-align: middle">OpenCodeInterpreter</span>
+            </h1>
+          <h2 class="subtitle is-3 publication-subtitle">
+            Integrating Code Generation with Execution and Refinement 
+            <!-- <br> -->
+            <!-- and Reasoning Benchmark for Expert AGI -->
+          </h2>
+          <div class="is-size-5 publication-authors">
+            <!-- <span class="author-block">Xiang Yue*<sup style="color:#6fbf73;">†,1</sup>,</span> -->
+            
+            <!-- <span class="author-block">Kai Zhang*<sup style="color:#ed4b82;">3</sup>,</span> -->
+            <span class="author-block">Tianyu Zheng*<sup style="color:#007bff;">1</sup>,
+            <span class="author-block">Ge Zhang*<sup style="color:#007bff;">1,2</sup>,</span>
+            <span class="author-block">Tianhao Shen*<sup style="color:#007bff;">1</sup>,</span>
+            <span class="author-block">Xueling Liu<sup style="color:#007bff;">1</sup>,</span><br>
+            <span class="author-block">Bill Yuchen Lin<sup style="color:#007bff;">3</sup>,</span>
+            <span class="author-block">Jie Fu<sup style="color:#007bff;">1,4</sup>,</span>
+            <span class="author-block">Wenhu Chen<sup style="color:#007bff;">2</sup>,</span>
+            <span class="author-block">
+              <a href="https://xiangyue9607.github.io/" style="text-decoration: none; color: inherit;">Xiang Yue*<sup style="color:#6fbf73;">†,5</sup></a>,
+            </span>
+
+          
+          </div>
+          
+          <br>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup style="color:#6fbf73;">1</sup>Multimodal Art Projection Research Community,</span>
+            <span class="author-block"><sup style="color:#ffac33;">2</sup>University of Waterloo,</span>
+            <span class="author-block"><sup style="color:#ed4b82;">3</sup>Allen Institute for Artificial Intelligence,</span>
+            <span class="author-block"><sup style="color:#007bff;">4</sup>HKUST,</span>
+            <span class="author-block"><sup style="color:#ffac33;">5</sup>IN.AI</span>
+          </div>
+
+          <br>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">*Core Contributors</span><br>
+            <span class="author-block">†Corresponding to:</span>
+            <span class="author-block"><a href="mailto:xiangyue.work@gmail.com">xiangyue.work@gmail.com</a>,</span>
+            <span class="author-block"><a href="mailto:zhengtianyu0428@gmail.com">zhengtianyu0428@gmail.com</a>,</span>
+            <!-- <span class="author-block"><a href="mailto:wenhuchen@uwaterloo.ca">wenhuchen@uwaterloo.ca</a></span> -->
+          </div>
+          
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <!-- @PAN TODO: change links -->
+                <a href="https://arxiv.org/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/papers"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <p style="font-size:18px">🤗</p>
+                  </span>
+                  <span>HF Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <!-- <i class="far fa-images"></i> -->
+                      <p style="font-size:18px">🤗</p>
+                      <!-- 🔗 -->
+                  </span>
+                  <span>Dataset</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              
+              <!-- Leaderboard Link. -->
+              <span class="link-block">
+                <a href="#leaderboard"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon has-text-white">
+                    <i class="fa-solid fa-trophy"></i>
+                      <!-- <p style="font-size:18px">🏆</p> -->
+                  </span>
+                  <span>Leaderboard</span>
+                </a>
+              </span>
+
+              
+              <!-- Twitter Link. -->
+              <span class="link-block">
+                <a href="https://twitter.com/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon has-text-white">
+                    <i class="fa-brands fa-x-twitter"></i>
+                      <!-- <p style="font-size:18px">🌐</p> -->
+                  </span>
+                  <span>Twitter</span>
+                </a>
+              </span>
+              <!-- EvalAI Link. -->
+              <span class="link-block">
+                <a href="#examples"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon has-text-white">
+                    <i class="fa-solid fa-book"></i>
+                  </span>
+                  <span>Examples</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+  }
+  </style>
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <!-- <div class="hero-body">
+      <img src="static/images/tease_scores.png" alt="Examples from the dataset"/>
+      <h2 class="subtitle has-text-centered">
+        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
+        free-viewpoint
+        portraits.
+      </h2>
+    </div> -->
+      <!-- <div class="box m-5"> -->
+        <div class="content has-text-centered">
+          <img src="static/images/figure1.png" alt="geometric reasoning" width="100%"/>
+          <p> Overview of the OpenCodeInterpreter and its pass@1 accuracy on the HumanEval. With appropriate feedback, OpenCodeInterpreter-DS-33B achieves performance comparable to that of the GPT-4 Code Interpreter. </p>
+        </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">🔔News</h2>
+        <div class="content has-text-justified">
+          <!-- <p>
+            <b>🚀[2024-01-31]: We added Human Expert performance on the <a href="#leaderboard">Leaderboard</a>!🌟</b>
+          </p> -->
+          <p>
+            <b>🔥[2024-02-19]: We have open-sourced all models in the OpenCodeInterpreter series ! We welcome everyone to try out our models and look forward to your participation! 😆</b>
+          </p>
+      </div>      
+        <h2 class="title is-3">Introduction</h2>
+        <div class="content has-text-justified">
+          <p>
+            The introduction of large language models has significantly advanced code generation. However, open-source models often lack the execution capabilities and iterative refinement of advanced systems like the GPT-4 Code Interpreter. To address this, we introduce OpenCodeInterpreter, a family of open-source code systems designed for generating, executing, and iteratively refining code. Supported by Code-Feedback, a dataset featuring 68K multi-turn interactions, OpenCodeInterpreter integrates execution and human feedback for dynamic code refinement. Our comprehensive evaluation of OpenCodeInterpreter across key benchmarks such as HumanEval, MBPP, and their enhanced versions from EvalPlus reveals its exceptional performance. Notably, OpenCodeInterpreter-33B achieves an accuracy of 83.2 (76.4) on the average (and plus versions) of HumanEval and MBPP, closely rivaling GPT-4's 84.2 (76.2) and further elevates to 91.6 (84.6) with synthesized human feedback from GPT-4. OpenCodeInterpreter brings the gap between open-source code generation models and proprietary systems like GPT-4 Code Interpreter.
+            <!-- We introduce MMMU: a new benchmark designed to evaluate multimodal models on massive multi-discipline tasks demanding college-level subject knowledge and deliberate reasoning. MMMU includes <b>11.5K</b> meticulously collected multimodal questions from college exams, quizzes, and textbooks, covering six core disciplines: Art & Design, Business, Science, Health & Medicine, Humanities & Social Science, and Tech & Engineering. These questions span <b>30</b> subjects and <b>183</b> subfields, comprising 30 highly heterogeneous image types, such as charts, diagrams, maps, tables, music sheets, and chemical structures. Unlike existing benchmarks, MMMU focuses on advanced perception and reasoning with domain-specific knowledge, challenging models to perform tasks akin to those faced by experts. Our evaluation of 14 open-source LMMs and the proprietary GPT-4V(ision) highlights the substantial challenges posed by MMMU. Even the advanced GPT-4V only achieves a 56% accuracy, indicating significant room for improvement. We believe MMMU will stimulate the community to build next-generation multimodal foundation models towards expert artificial general intelligence. -->
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</div>
+</section>
+
+<!-- DATASET SECTION -->
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+  <h1 class="title is-1 mmmu">
+    <img src="static/images/mmmu_icon2.png" style="width:1em;vertical-align: middle" alt="Logo"/>
+    <span class="mmmu" style="vertical-align: middle">OpenCodeInterpreter</span>
+  </h1>
+  </div>
+</section>
+
+<!-- <section class="section">
+  <div class="container" style="margin-bottom: 2vh;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Introduction</h2>
+        <div class="content has-text-justified">
+          <p> -->
+            
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-full-width has-text-centered"> -->
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            Code generation has long been a cornerstone challenge in computer science, evolving significantly over the years from its initial reliance on symbolic methods to the recent revolutionary impact of large language models (LLMs). These LLMs, pre-trained on vast code corpora, have dramatically advanced the field by generating code that closely aligns with user intents, thereby offering substantial support for software development. As these models continue to evolve, they have become integral tools in automating and enhancing the coding process, exemplified by innovations such as GitHub Copilot. 
+          </p>
+          <!-- <img src="static/images/figure3.png" alt="algebraic reasoning" class="center">
+          <br> -->
+          <p>
+            To further enhance the capabilities of pre-trained code models, instruction-tuning methods have been introduced. Among these, OpenCodeInterpreter stands out as a pioneering approach, leveraging a unique dataset named Code-Feedback. This dataset comprises 68K multi-turn interactions that include both user instructions and compiler feedback, enabling the model to not only generate but also refine code based on execution outputs and human guidance. Such advancements allow OpenCodeInterpreter to produce solutions that are not only technically sound but also closely aligned with user expectations, setting a new standard in code generation. 
+          </p>
+          <p>
+            OpenCodeInterpreter's innovative integration of execution and human feedback marks a significant leap forward in the domain. By harnessing compiler diagnostics to correct errors and incorporating human insights for code refinement, OpenCodeInterpreter achieves an unparalleled balance of accuracy and user alignment. Its performance on widely recognized benchmarks, including HumanEval and MBPP, demonstrates its superior ability to iteratively refine code, achieving results that narrow the performance gap with proprietary systems like GPT-4's Code Interpreter. OpenCodeInterpreter thus heralds a new era in code generation, offering open-source systems that rival the sophistication and efficacy of their proprietary counterparts.          
+          </p>
+        </div>
+    </div>
+    </div>
+
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-full-width has-text-centered"> -->
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Code-Feedback</h2>
+        <div class="content has-text-justified">
+          <p>
+          In the development of Code-Feedback, we meticulously crafted our dataset, known as Code-Feedback, to train the OpenCodeInterpreter, with a focus on specific criteria that ensure the dataset's effectiveness and relevance to real-world coding challenges. Code-Feedback is distinguished by its inclusion of diverse and challenging queries derived from actual coding tasks. This diversity is crucial, as it ensures that the dataset covers a broad spectrum of problems, providing both variety and complexity. Moreover, the dataset adopts a multi-turn dialogue structure, enhancing its utility by incorporating execution feedback, such as outputs and diagnostics from compilers, alongside human feedback, which includes additional guidance or instructions from users. This structure is pivotal in simulating real-world coding scenarios where iterative feedback and adjustments are common.
+          </p>
+          <p> 
+          The creation of Code-Feedback involved a comprehensive approach, employing five distinct methods to gather and curate data. This multifaceted approach was designed to fulfill the dataset's three key criteria: the incorporation of diverse real-world queries, a structured multi-turn dialogue format, and the interleaving of text and code responses to offer a comprehensive solution to coding queries. The sources of our queries were twofold, comprising a variety of open-source datasets and coding challenges from platforms like LeetCode. This combination ensures a rich and varied dataset that accurately reflects the nature of coding tasks encountered by developers. In subsequent sections, we delve into the specific methods employed in constructing the dataset, illustrating our commitment to creating a robust and effective tool for coding instruction and feedback.
+        </p>
+        <div class="content has-text-centered">
+          <img src="static/images/figure3.jpg" alt="algebraic reasoning" class="center">
+          <p> Summary of our proposed dataset OpenCodeInterpreter construction and comparison with existing code instruction tuning datasets. M.T: Multi Turn, E.F: Execute Feedback, H.F: Human Feedback.</p>
+        </div>
+          
+          
+        </div>
+    </div>
+    </div>
+
+
+    <!-- <div class="columns is-centered m-6">
+      <div class="column is-max-desktop has-text-centered">
+        <h2 class="title is-3" id="visualization">Visualization</h2>
+        <iframe src="visualizer/explore.html" style="width: 100%;min-height: 100vh; border-radius: 20px;"></iframe>
+      </div>
+    </div> -->
+  </div>
+</section>
+
+<!-- RESULTS SECTION -->
+<section class="hero is-light is-small">
+  <div class="hero-body has-text-centered">
+    <h1 class="title is-1 mmmu">Main Results</h1>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+<!-------------------------------------------------------------------- RESULTS SECTION -------------------------------------------------------------------->
+    <div class="columns is-centered m-6">
+        <div class="column is-full has-text-centered content">
+          <h2 class="title is-3" id="leaderboard">Leaderboard</h2>
+          <div class="content">
+            <div class="content has-text-justified">
+              <p>
+                This section outlines the experimental framework for evaluating the performance of OpenCodeInterpreter and its comparison with leading models in both single-turn and multi-turn code generation settings. The study leverages data from the EvalPlus leaderboard, examining OpenCodeInterpreter's performance against benchmarks such as GPT-3.5/4-Turbo, CodeLlama-Python, WizardCoder, Deepseek-Coder, and CodeT5+ across various scales on the HumanEval and MBPP benchmarks and their advanced versions. For multi-turn code generation, the focus shifts to assessing OpenCodeInterpreter's capability in iterative refinement through a two-round limit, considering execution feedback and human feedback scenarios. The experimental setup aims to highlight OpenCodeInterpreter's adaptability and proficiency in code generation, underscored by its achievements in setting new standards in software development tools through iterative feedback and refinement. 
+
+              </p>
+            </div>
+
+            <!-- <button id="toggleButton" onclick="changeButtonText()"><b style='font-size: larger;'>Validation Set Leaderboard</b> (Click to Switch)</button> -->
+            <b style='font-size: larger;'>
+              Pass rate of different code models on HumanEval (+), MBPP (+) and their average (+). 
+            </b>
+
+            <div class="content has-text-justified">
+              <p style="text-align: center;">`CL': based on CodeLlama; `DS': based on DeepseekCoder. 
+                Baseline results are copied from the EvalPlus Leaderboard or replicated by running the official checkpoints.
+              </p>
+            </div>
+            <div class="model-labels-container">
+              <span class="leaderboard-label" style="background-color: #ffffcc;">Strong Baselines</span>
+              <span class="leaderboard-label" style="background-color: #a0c4ff;">Our Methods</span>
+            </div>
+
+            <table id="table1" class="js-sort-table">
+              <thead>
+              <tr>
+              <th style="text-align: center; vertical-align: middle;" rowspan="2">Model</th>
+              <th style="text-align: center; vertical-align: middle;" rowspan="2">Size</th>
+              <th style="text-align: center; vertical-align: middle;" rowspan="2">Type</th>
+              <th colspan="2">Open-source</th>
+              <th style="text-align: center; vertical-align: middle;" rowspan="2">HumanEval (+)</th>
+              <th style="text-align: center; vertical-align: middle;" rowspan="2">MBPP (+)</th>
+              <th style="text-align: center; vertical-align: middle;" rowspan="2">Average (+)</th>
+              </tr>
+              <tr>
+              <th>Model</th>
+              <th>Data</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr style="background-color: #ffffcc;">
+                <td style="text-align: left;">GPT-4 Turbo</td>
+                <td style="text-align: center; vertical-align: middle;" rowspan="2">-</td>
+                <td style="text-align: center; vertical-align: middle;" rowspan="2">-</td>
+                <td style="text-align: center; vertical-align: middle;" rowspan="2">○</td>
+                <td style="text-align: center; vertical-align: middle;" rowspan="2">○</td>
+                <td>85.4 (81.7)</td>
+                <td>83.0 (70.7)</td>
+                <td>84.2 (76.2)</td>
+                </tr>
+                <tr style="background-color: #ffffcc;">
+                <td style="text-align: left;">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                </td>
+                <td><strong>88.0 (84.2)</strong></td>
+                <td><strong>92.0 (78.2)</strong></td>
+                <td><strong>90.0 (81.2)</strong></td>
+                </tr>
+
+                <tr style="background-color: #ffffcc;">
+                <td style="text-align: left;">GPT-3.5 Turbo</td>
+                <td style="text-align: center; vertical-align: middle;" rowspan="2">-</td>
+                <td style="text-align: center; vertical-align: middle;" rowspan="2">-</td>
+                <td style="text-align: center; vertical-align: middle;" rowspan="2">○</td>
+                <td style="text-align: center; vertical-align: middle;" rowspan="2">○</td>
+                <td>72.6 (65.9)</td>
+                <td>81.7 (69.4)</td>
+                <td>77.2 (67.7)</td>
+                </tr>
+                <tr style="background-color: #ffffcc;">
+                <td style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback</td>
+                <td>76.8 (70.7)</td>
+                <td>87.0 (73.9)</td>
+                <td>81.9 (72.3)</td>
+                </tr>
+                <tr style="height: 20px" class="dashed-border">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  Gemini Pro
+                  </td>
+                  <td class="s0" dir="ltr">
+                  -
+                  </td>
+                  <td class="s0" dir="ltr">
+                  -
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  63.4 (55.5)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  72.9 (57.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  68.2 (56.7)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s1" style="text-align: center;" colspan="8" dir="ltr">
+                  ~7B Scale
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td  style="text-align: left;" class="s0" dir="ltr">
+                  StarCoder
+                  </td>
+                  <td class="s0" dir="ltr">
+                  7B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  24.4 (20.7)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  33.1 (28.8)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  28.8 (24.8)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  CodeT5+
+                  </td>
+                  <td class="s0" dir="ltr">
+                  6B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  29.3 (23.8)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  51.9 (40.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  40.6 (32.4)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  CodeGen-Mono
+                  </td>
+                  <td class="s0" dir="ltr">
+                  6B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  29.3 (25.6)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  49.9 (42.1)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  39.6 (33.9)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  Mistral
+                  </td>
+                  <td class="s0" dir="ltr">
+                  7B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  28.7 (23.2)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  50.1 (40.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  39.4 (32.1)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  OpenChat
+                  </td>
+                  <td class="s0" dir="ltr">
+                  7B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  72.0 (67.1)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  62.7 (52.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  67.4 (60.0)
+                  </td>
+                </tr>
+                <tr style="height: 20px;" class="dashed-border">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                    CodeLlama-Python
+                  </td>
+                  <td class="s0" dir="ltr">
+                  7B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  37.8 (34.1)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  57.6 (45.4)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  47.7 (39.8)
+                  </td>
+                </tr>
+                <tr style="height: 20px;">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WizardCoder-CL
+                  </td>
+                  <td class="s0" dir="ltr">
+                  7B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  48.2 (40.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  56.6 (47.1)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  52.4 (44.0)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Magicoder-CL
+                  </td>
+                  <td class="s0" dir="ltr">
+                  7B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  60.4 (55.5)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  64.2 (52.6)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  62.3 (54.1)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Magicoders-S-CL
+                  </td>
+                  <td class="s0" dir="ltr">
+                  7B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  70.7 (66.5)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  68.4 (56.6)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  69.6 (61.6)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>OpenCodeInterpreter-CL</strong>
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  7B
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  Instruct
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s2" dir="ltr">
+                  72.6 (67.7)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  66.4 (55.4)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  69.5 (61.6)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                  75.6 (70.1)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  69.9 (60.7)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  72.8 (65.4)
+                  </td>
+                </tr>
+                <tr style="height: 20px" class="dashed-border">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  DeepseekCoder
+                  </td>
+                  <td class="s0" dir="ltr">
+                  6.7B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  47.6 (39.6)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  70.2 (56.6)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  58.9 (48.1)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #ffffcc;">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DeepseekCoder-Instruct
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  6.7B
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  73.8 (70.1)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  73.2 (63.4)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  73.5 (66.8)
+                  </td>
+                </tr>
+
+                <tr style="height: 20px; background-color: #ffffcc">
+                  <td class="s3" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                    80.5 (75.6)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    79.9 (70.4)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    80.2 (73.0)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Magicoder-DS
+                  </td>
+                  <td class="s0" dir="ltr">
+                  6.7B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  66.5 (60.4)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  75.4 (61.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  71.0 (61.2)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #ffffcc" >
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Magicoder-S-DS
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  6.7B
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  <span style="font-weight:bold;">
+                    76.8
+                  </span>
+                  (70.7)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  75.7 (64.4)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  76.3 (67.6)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #ffffcc">
+                  <td class="s3" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                    77.4 (72.0)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    73.2 (62.4)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    75.3 (67.2)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>OpenCodeInterpreter-DS</strong>
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="4">
+                  6.7B
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="4">
+                  Instruct
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="4">
+                  ●
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="4">
+                  ●
+                  </td>
+                  <td class="s2" dir="ltr">
+                  <span style="font-weight:normal;">
+                    76.2
+                  </span>
+                  (72.0)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  73.9 (63.7)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  75.1 (67.9)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                  81.1 (78.7)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  82.7 (72.4)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  81.9 (75.6)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Synth. Human  Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                    87.2 (<strong>86.6</strong>)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    86.2 (74.2)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    86.7 (80.4)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Synth. Human  Feedback (Oracle)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    <strong>89.7</strong> (<strong>86.6</strong>)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    <strong>87.2</strong> (<strong>75.2</strong>)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    <strong>88.5</strong> (<strong>80.9</strong>)
+                  </td>
+                </tr>
+
+                <tr style="height: 20px">
+                  <td class="s1" colspan="8" dir="ltr">
+                  ～13B Scale
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  CodeGen-Mono
+                  </td>
+                  <td class="s0" dir="ltr">
+                  16B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  32.9 (27.4)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  52.6 (43.6)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  42.8 (35.5)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  StarCoder
+                  </td>
+                  <td class="s0" dir="ltr">
+                  15B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  34.1 (29.3)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  55.1 (46.1)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  44.6 (37.7)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  CodeT5+
+                  </td>
+                  <td class="s0" dir="ltr">
+                  16B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  31.7 (26.2)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  54.6 (44.4)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  43.2 (35.3)
+                  </td>
+                </tr>
+                
+                <tr style="height: 20px" class="dashed-border">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    CodeLlama-Python
+                  </td>
+                  <td class="s0" dir="ltr">
+                  13B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s0">
+                    42.7 (36.6)
+                  </td>
+                  <td class="s0">
+                    61.2 (50.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                    52.0 (43.8)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>OpenCodeInterpreter-CL</strong>
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  13B
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  Instruct
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s2" dir="ltr">
+                  77.4 (73.8)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  70.7 (59.2)
+                  </td>
+                  <td class="s2" dir="ltr">
+                  74.1 (66.5)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                  <strong>81.1</strong> (<strong>76.8</strong>)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    <strong>78.2</strong> (<strong>67.2</strong>)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    <strong>79.7</strong> (<strong>72.0</strong>)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s1" colspan="8" dir="ltr">
+                  ～34B Scale
+                  </td>
+                </tr>
+
+                <tr style="height: 20px">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    CodeLlama-Python
+                  </td>
+                  <td class="s0" dir="ltr">
+                  34B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                    51.8 (43.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                    67.2 (52.9)
+                  </td>
+                  <td class="s0">
+                    59.5 (48.4)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Speechless-CL-v2.0
+                  </td>
+                  <td class="s0" dir="ltr">
+                  34B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1">
+                  ●
+                  </td>
+                  <td class="s1">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  77.4 (71.3)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  72.4 (59.1)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  74.9 (65.2)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XwinCoder-CL
+                  </td>
+                  <td class="s0" dir="ltr">
+                  34B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1">
+                  ●
+                  </td>
+                  <td class="s1">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  75.6 (67.7)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  76.2 (62.4)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  75.9 (65.1)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Phind-CL-v2
+                  </td>
+                  <td class="s0" dir="ltr">
+                  34B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  71.3 (67.1)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  -
+                  </td>
+                  <td class="s1" dir="ltr">
+                  -
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WizardCoder-CL
+                  </td>
+                  <td class="s0" dir="ltr">
+                  34B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  73.2 (64.6)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  73.2 (59.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  73.2 (62.3)
+                  </td>
+                </tr>
+
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>OpenCodeInterpreter-CL</strong>
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  34B
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  Instruct
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s2" dir="ltr">
+                    78.0 (72.6)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    73.4 (61.4)
+                  </td>
+                  <td class="s3">
+                    75.7 (67.0)
+                  </td>
+                </tr>
+
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                    81.7 (78.7)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    80.2 (67.9)
+                  </td>
+                  <td class="s3">
+                    81.0 (73.3)
+                  </td>
+                </tr>
+                <tr style="height: 20px" class="dashed-border">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  DeepSeekCoder
+                  </td>
+                  <td class="s0" dir="ltr">
+                  33B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  51.2 (44.5)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  </td>
+                  <td class="s0">
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #ffffcc">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DeepSeekCoder-Instruct
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  33B
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  81.1 (75.0)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  78.7 (66.7)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  79.9 (70.9)
+                  </td>
+                </tr>
+
+                <tr style="height: 20px; background-color: #ffffcc">
+                  <td class="s2" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                    81.1 (76.2)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    82.7 (73.4)
+                  </td>
+                  <td class="s3">
+                    81.9 (74.8)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #ffffcc">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WizardCoder-V1.1
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  33B
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  79.9 (73.2)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  78.9 (66.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  79.4 (70.1)
+                  </td>
+                </tr>
+                <!-- 74.4 (69.5)  & 79.9 (68.2) & 77.2 (68.9) -->
+                <tr style="height: 20px; background-color: #ffffcc">
+                  <td class="s2" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                    74.4 (69.5)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    79.9 (68.2)
+                  </td>
+                  <td class="s3">
+                    77.2 (68.9)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>OpenCodeInterpreter-DS</strong>
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="4">
+                  33B
+                  </td>
+                  <td class="s0" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="4">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="4">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="4">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  79.3 (74.3)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  78.7 (66.4)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  79.0 (70.4)
+                  </td>
+                </tr>
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s1" dir="ltr">
+                  82.9 (80.5)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  83.5 (72.2)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  83.2 (76.4)
+                  </td>
+                </tr>
+                <!-- 88.4 (86.0) & 87.5 (75.9) & 88.0 (81.0) -->
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Synth. Human  Feedback
+                  </td>
+                  <td class="s2" dir="ltr">
+                    88.4 (86.0)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    87.5 (75.9)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    88.0 (81.0)
+                  </td>
+                </tr>
+                <!-- \textbf{92.7} (\textbf{89.7}) & \textbf{90.5} (\textbf{79.5}) & \textbf{91.6} (\textbf{84.6}) -->
+                <tr style="height: 20px; background-color: #a0c4ff">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Synth. Human  Feedback (Oracle)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    <strong>92.7</strong> (<strong>89.7</strong>)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    <strong>90.5</strong> (<strong>79.5</strong>)
+                  </td>
+                  <td class="s2" dir="ltr">
+                    <strong>91.6</strong> (<strong>84.6</strong>)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s1" colspan="8" dir="ltr">
+                  ～70B Scale
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0" dir="ltr" style="text-align: left;">
+                  CodeLlama-Python
+                  </td>
+                  <td class="s0" dir="ltr">
+                  70B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Base
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  55.5 (50.0)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  65.4 (53.4)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  60.5 (51.7)
+                  </td>
+                </tr>
+                <tr style="height: 20px">
+                  <td class="s0 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CodeLlama-Instruct
+                  </td>
+                  <td class="s0" dir="ltr">
+                  70B
+                  </td>
+                  <td class="s0" dir="ltr">
+                  Instruct
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  ○
+                  </td>
+                  <td class="s1" dir="ltr">
+                  72.0 (65.2)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  75.4 (61.7)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  73.7 (63.5)
+                  </td>
+                </tr>
+                <tr style="height: 20px;background-color: #a0c4ff;">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>OpenCodeInterpreter-CL</strong>
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  70B
+                  </td>
+                  <td class="s3" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  Instruct
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s2" dir="ltr" style="text-align: center; vertical-align: middle;" rowspan="2">
+                  ●
+                  </td>
+                  <td class="s1" dir="ltr">
+                  76.2 (70.7)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  73.0 (61.9)
+                  </td>
+                  <td class="s1" dir="ltr">
+                  74.6 (66.3)
+                  </td>
+                </tr>
+                <tr style="height: 20px;background-color: #a0c4ff;">
+                  <td class="s3 softmerge" dir="ltr" style="text-align: left;">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Execution Feedback
+                  </td>
+                  <td class="s1" dir="ltr">
+                  <strong>79.9</strong> (<strong>77.4</strong>)
+                  </td>
+                  <td class="s1" dir="ltr">
+                    <strong>81.5</strong> (<strong>69.9</strong>)
+                  </td>
+                  <td class="s1" dir="ltr">
+                    <strong>80.7</strong> (<strong>73.7</strong>)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  <!-------------------------------------------------------------------- RESULTS SECTION -------------------------------------------------------------------->
+  </div>
+</section>
+
+
+<!-- @PAN TODO: bibtex -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">BibTeX</h2>
+    <pre><code>
+      @article{opencodeinterpreter,
+        title={OpenCodeInterpreter: Integrating Code Generation with Execution and Refinement},
+        author={Tianyu Zheng and Ge Zhang and Tianhao Shen and Xueling Liu and Bill Yuchen Lin and Jie Fu and Wenhu Chen and Xiang Yue},
+        journal={},
+        year={2024},
+      }
+</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <!-- <div class="container"> -->
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is website adapted from <a href="https://nerfies.github.io/">Nerfies</a> and <a href="https://mathvista.github.io/">MathVista</a>, licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+
+</footer>
+
+<script>
+//   function changeButtonText() {
+//     var button = document.getElementById('toggleButton');
+//     if (button.innerHTML.includes("Human")) {
+//       button.innerHTML = "<b style='font-size: larger;'>Test Set Leaderboard</b> (Click to Switch)";
+//     } else {
+//       button.innerHTML = "<b style='font-size: larger;'>Validation Set Leaderboard</b> (Click to Switch)";
+//     }
+//   }
+//   document.addEventListener('DOMContentLoaded', function() {
+//     var tables = document.querySelectorAll('table');
+
+//     tables.forEach(function(table) {
+//         if (!table) return;
+
+//         var initialRows = Array.from(table.rows).slice(1);
+//         table.addEventListener('click', function(event) {
+//             var clickedCell = event.target.closest('td, th');
+//             if (!clickedCell) return;
+//             var headerRow = clickedCell.parentNode;
+//             var columnIndex = Array.from(headerRow.cells).indexOf(clickedCell);
+//             var type = clickedCell.getAttribute('data-type');
+
+//             if (headerRow.rowIndex === 0) {
+//                 if (columnIndex === 0) {
+//                     table.tBodies[0].innerHTML = '';
+//                     initialRows.forEach(row => table.tBodies[0].appendChild(row.cloneNode(true)));
+//                 }
+//             }
+//         });
+//     });
+// });
+
+function sortTable(table, column, type, asc) {
+    var tbody = table.tBodies[0];
+    var rows = Array.from(tbody.rows);
+
+    rows.sort(function(a, b) {
+        var valA = a.cells[column].textContent;
+        var valB = b.cells[column].textContent;
+
+        if (type === 'number') {
+            valA = parseFloat(valA);
+            valB = parseFloat(valB);
+        }
+
+        return asc ? valA - valB : valB - valA;
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
+}
+
+  // 切换表格的函数
+  function toggleTables () {
+      var table1 = document.getElementById('table1');
+      var table2 = document.getElementById('table2');
+      table1.classList.toggle('hidden');
+      table2.classList.toggle('hidden');
+  }
+
+  document.getElementById('toggleButton').addEventListener('click', toggleTables);
+  const canvas = document.getElementById('difficulty_level_chart');
+  canvas.style.width = '500px';
+  canvas.style.height = '120px';
+  const ctx = document.getElementById('difficulty_level_chart').getContext('2d');
+  const difficulty_level_chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Easy', 'Medium', 'Hard', 'Overall'],
+      datasets: [{
+        label: 'Fuyu-8B',
+        data: [28.9, 27, 26.4, 27.4],
+        backgroundColor: 'rgba(196, 123, 160, 0.6)',
+        borderColor: 'rgba(196, 123, 160, 1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(196, 123, 160, 1)'
+      },
+      {
+        label: 'Qwen-VL-7B',
+        data: [39.4, 31.9, 27.6, 32.9],
+        backgroundColor: 'rgba(245, 123, 113, 0.6)',
+        borderColor: 'rgba(245, 123, 113, 1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(245, 123, 113, 1)'
+      },
+      {
+        label: 'LLaVA-1.5-13B',
+        data: [41.3, 32.7, 26.7, 33.6],
+        backgroundColor: 'rgba(255, 208, 80, 0.6)',
+        borderColor: 'rgba(255, 208, 80, 1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(255, 208, 80, 1)'
+      },
+      {
+        label: 'InstructBLIP-T5-XXL',
+        data: [40.3, 32.3, 29.4, 33.8],
+        backgroundColor: 'rgba(110, 194, 134, 0.6)',
+        borderColor: 'rgba(110, 194, 134, 1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(110, 194, 134, 1)'
+      },
+      {
+        label: 'BLIP-2 FLAN-T5-XXL',
+        data: [41, 32.7, 28.5, 34],
+        backgroundColor: 'rgba(255, 153, 78, 0.6)',
+        borderColor: 'rgba(255, 153, 78, 1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(255, 153, 78, 1)'
+      },
+      {
+        label: 'GPT-4V',
+        data: [76.1, 55.6, 31.2, 55.7],
+        backgroundColor: 'rgba(117, 209, 215, 0.6)',
+        borderColor: 'rgba(117, 209, 215, 1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(117, 209, 215, 1)'
+      }]
+    },
+    options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        min: 0,
+        max: 100,
+        ticks: {
+          stepSize: 20,
+          font: {
+            size: 16
+          }
+        }
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 16 // 设置X轴字体大小
+          }
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            size: 16 // 设置标签文字大小
+          }
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            return context.dataset.label + ': ' + context.parsed.y;
+          }
+        }
+      }
+    },
+      onHover: (event, chartElement) => {
+        event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+      }
+    }
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    // Data for the "Diagrams" chart
+    const data_Diagrams = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [27.6, 30.1, 31.8, 30.0, 32.0, 46.8],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+
+    // "data_Diagrams" chart
+    new Chart(document.getElementById('chart_Diagrams'), {
+        type: 'bar',
+        data: data_Diagrams,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Tables" chart
+    const data_Tables  = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [26.6, 29.0, 29.8, 27.8, 27.8, 61.8],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Tables'), {
+        type: 'bar',
+        data: data_Tables,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_PlotsAndCharts " chart
+    const data_PlotsAndCharts   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [24.8, 31.8, 36.2, 30.4, 35.8, 55.6],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_PlotsAndCharts'), {
+        type: 'bar',
+        data: data_PlotsAndCharts ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_ChemicalStructures " chart
+    const data_ChemicalStructures   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [25.0, 27.2, 27.1, 26.7, 25.5, 50.6],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_ChemicalStructures'), {
+        type: 'bar',
+        data: data_ChemicalStructures ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Photographs " chart
+    const data_Photographs   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [27.6, 40.5, 41.4, 44.4, 42.0, 64.2],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Photographs'), {
+        type: 'bar',
+        data: data_Photographs ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Paintings " chart
+    const data_Paintings   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [28.7, 57.2, 53.6, 56.3, 52.1, 75.9],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Paintings'), {
+        type: 'bar',
+        data: data_Paintings ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_GeometricShapes " chart
+    const data_GeometricShapes   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [21.1, 25.3, 21.4, 25.6, 28.3, 40.2],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_GeometricShapes'), {
+        type: 'bar',
+        data: data_GeometricShapes ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_SheetMusic " chart
+    const data_SheetMusic   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [35.2, 33.4, 34.6, 35.8, 34.9, 38.8],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_SheetMusic'), {
+        type: 'bar',
+        data: data_SheetMusic ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_MedicalImages " chart
+    const data_MedicalImages   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [25.4, 29.8, 31.6, 36.4, 29.8, 59.6],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_MedicalImages'), {
+        type: 'bar',
+        data: data_MedicalImages ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_PathologicalImages " chart
+    const data_PathologicalImages   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [26.5, 27.7, 31.2, 35.2, 35.6, 63.6],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_PathologicalImages'), {
+        type: 'bar',
+        data: data_PathologicalImages ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_MicroscopicImages " chart
+    const data_MicroscopicImages   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [27.0, 37.6, 29.2, 36.3, 32.7, 58.0],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_MicroscopicImages'), {
+        type: 'bar',
+        data: data_MicroscopicImages ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_MRIsCTScansXrays " chart
+    const data_MRIsCTScansXrays   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [21.7, 36.9, 33.3, 39.4, 29.8, 50.0],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_MRIsCTScansXrays'), {
+        type: 'bar',
+        data: data_MRIsCTScansXrays ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_SketchesAndDrafts " chart
+    const data_SketchesAndDrafts   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [37.0, 32.1, 29.9, 38.0, 33.7, 55.4],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_SketchesAndDrafts'), {
+        type: 'bar',
+        data: data_SketchesAndDrafts ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Maps " chart
+    const data_Maps   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [38.2, 36.5, 45.9, 47.6, 43.5, 61.8],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Maps'), {
+        type: 'bar',
+        data: data_Maps ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_TechnicalBlueprints " chart
+    const data_TechnicalBlueprints   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [24.7, 25.9, 28.4, 25.3, 27.8, 38.9],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_TechnicalBlueprints'), {
+        type: 'bar',
+        data: data_TechnicalBlueprints ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_TreesAndGraphs " chart
+    const data_TreesAndGraphs   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [30.1, 28.1, 28.8, 28.8, 34.9, 50.0],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_TreesAndGraphs'), {
+        type: 'bar',
+        data: data_TreesAndGraphs ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_MathematicalNotations " chart
+    const data_MathematicalNotations   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [15.8, 27.1, 22.6, 21.8, 21.1, 45.9],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_MathematicalNotations'), {
+        type: 'bar',
+        data: data_MathematicalNotations ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_ComicsAndCartoons " chart
+    const data_ComicsAndCartoons   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [29.0, 51.9, 49.6, 54.2, 51.1, 68.7],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_ComicsAndCartoons'), {
+        type: 'bar',
+        data: data_ComicsAndCartoons ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Sculpture " chart
+    const data_Sculpture   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [30.8, 46.2, 49.6, 51.3, 53.0, 76.1],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Sculpture'), {
+        type: 'bar',
+        data: data_Sculpture ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Portraits " chart
+    const data_Portraits   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [20.9, 52.7, 46.2, 54.9, 47.3, 70.3],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Portraits'), {
+        type: 'bar',
+        data: data_Portraits ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Screenshots " chart
+    const data_Screenshots   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [38.6, 35.7, 38.6, 34.3, 47.1, 65.7],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Screenshots'), {
+        type: 'bar',
+        data: data_Screenshots ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Other " chart
+    const data_Other   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [28.3, 38.3, 50.0, 51.7, 58.3, 68.3],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Other'), {
+        type: 'bar',
+        data: data_Other ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Poster " chart
+    const data_Poster   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [38.6, 50.9, 52.6, 61.4, 64.9, 80.7],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Poster'), {
+        type: 'bar',
+        data: data_Poster ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_IconsAndSymbols " chart
+    const data_IconsAndSymbols   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [23.8, 66.7, 57.1, 59.5, 59.5, 78.6],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_IconsAndSymbols'), {
+        type: 'bar',
+        data: data_IconsAndSymbols ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_HistoricalTimelines " chart
+    const data_HistoricalTimelines   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [30.0, 36.7, 40.0, 43.3, 43.3, 63.3],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_HistoricalTimelines'), {
+        type: 'bar',
+        data: data_HistoricalTimelines ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_3DRenderings " chart
+    const data_3DRenderings   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [33.3, 28.6, 57.1, 38.1, 47.6, 47.6],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_3DRenderings'), {
+        type: 'bar',
+        data: data_3DRenderings ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_DNASequences " chart
+    const data_DNASequences   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [20.0, 45.0, 25.0, 25.0, 45.0, 55.0],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_DNASequences'), {
+        type: 'bar',
+        data: data_DNASequences ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Landscapes " chart
+    const data_Landscapes   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [43.8, 43.8, 50.0, 31.2, 62.5, 68.8],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Landscapes'), {
+        type: 'bar',
+        data: data_Landscapes ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_LogosAndBranding " chart
+    const data_LogosAndBranding   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [21.4, 57.1, 64.3, 35.7, 50.0, 85.7],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_LogosAndBranding'), {
+        type: 'bar',
+        data: data_LogosAndBranding ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
+            }
+          },
+          x: {
+            display: false
+          }
+        },
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+
+    // "data_Advertisements " chart
+    const data_Advertisements   = {
+        labels: ['Fuyu-8B', 'Qwen-VL-7B', 'InstructBLIP-T5-XXL', 'LLaVA-1.5-13B', 'BLIP-2 FLAN-T5-XXL', 'GPT-4V'],
+        datasets: [{
+            data: [30.0, 60.0, 50.0, 60.0, 70.0, 100.0],
+            backgroundColor: ['rgba(196, 123, 160, 0.6)', 'rgba(245, 123, 113, 0.6)', 'rgba(255, 208, 80, 0.6)', 'rgba(110, 194, 134, 0.6)', 'rgba(255, 153, 78, 0.6)', 'rgba(117, 209, 215, 0.6)'],
+            borderColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,0.4)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)'],
+            hoverBackgroundColor: ['rgba(196, 123, 160, 1)', 'rgba(245, 123, 113,1)', 'rgba(255, 208, 80, 1)', 'rgba(110, 194, 134, 1)', 'rgba(255, 153, 78, 1)', 'rgba(117, 209, 215, 1)']
+        }]
+    };
+    new Chart(document.getElementById('chart_Advertisements'), {
+        type: 'bar',
+        data: data_Advertisements ,
+        options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,     
+            max: 100,   
+            ticks: {
+              stepSize: 20 
+            }
+          },
+          x: {
+            display: false 
+          }
+        },
+        plugins: {
+          legend: {
+            display: false 
+          },
+          tooltip: {
+          }
+        }
+      }
+    });
+});
+
+</script>
+
+<style>
+  .hidden {
+      display: none;
+  }
+  .sortable:hover {
+      cursor: pointer;
+  }
+  .asc::after {
+      content: ' ↑';
+  }
+  .desc::after {
+      content: ' ↓';
+  }
+  #toggleButton {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    color: #555555;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 25px; 
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition-duration: 0.4s;
+  }
+
+  #toggleButton:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); /* 鼠标悬停时的阴影效果 */
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    border-left: none;
+    border-right: none;
+  }
+
+  th, td {
+      text-align: left;
+      padding: 8px;
+      border-left: none;
+      border-right: none;
+  }
+
+  th {
+      background-color: #f2f2f2;
+      border-bottom: 2px solid #ddd;
+      border-left: none;
+      border-right: none;
+  }
+
+  td:hover {background-color: #ffffff;}
+  
+  /* 去掉第二行和第三行之间的横线 */
+  tr:nth-child(1) td {
+      border-bottom: none;
+  }
+  tr:nth-child(2) td {
+      border-bottom: none;
+  }
+  tr:nth-child(3) td {
+      border-bottom: none;
+  }
+  tr:nth-child(4) td {
+      border-bottom: none;
+  }
+  .dashed-border {
+      border-top: 2px dashed #ccc; /* 调整间隔宽度和颜色 */
+      /* border-image: linear-gradient(to right, #ccc 25%, transparent 25%) 1 1; */
+    }
+  .centered-span {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* 水平居中 */
+        height: 100%; /* 让 span 高度充满单元格 */
+    }
+  tr:nth-child(7) td {
+      border-bottom: none;
+  }
+  tr:nth-child(8) td {
+      border-bottom: none;
+  }
+  tr:nth-child(9) td {
+      border-bottom: none;
+  }
+  tr:nth-child(10) td {
+      border-bottom: none;
+  }
+  tr:nth-child(11) td {
+      border-bottom: none;
+  }
+  tr:nth-child(12) td {
+      border-bottom: none;
+  }
+  tr:nth-child(13) td {
+      border-bottom: none;
+  }
+  tr:nth-child(14) td {
+      border-bottom: none;
+  }
+  tr:nth-child(15) td {
+      border-bottom: none;
+  }
+  tr:nth-child(16) td {
+      border-bottom: none;
+  }
+  tr:nth-child(17) td {
+      border-bottom: none;
+  }
+  tr:nth-child(18) td {
+      border-bottom: none;
+  }
+  tr:nth-child(19) td {
+      border-bottom: none;
+  }
+  tr:nth-child(20) td {
+      border-bottom: none;
+  }
+  tr:nth-child(21) td {
+      border-bottom: none;
+  }
+  tr:nth-child(22) td {
+      border-bottom: none;
+  }
+  tr:nth-child(23) td {
+      border-bottom: none;
+  }
+  tr:nth-child(24) td {
+      border-bottom: none;
+  }
+  tr:nth-child(25) td {
+      border-bottom: none;
+  }
+  tr:nth-child(26) td {
+      border-bottom: none;
+  }
+  tr:nth-child(29) td {
+      border-bottom: none;
+  }
+  tr:nth-child(30) td {
+      border-bottom: none;
+  }
+  tr:nth-child(31) td {
+      border-bottom: none;
+  }
+  tr:nth-child(32) td {
+      border-bottom: none;
+  }
+  tr:nth-child(33) td {
+      border-bottom: none;
+  }
+  tr:nth-child(36) td {
+      border-bottom: none;
+  }
+  tr:nth-child(37) td {
+      border-bottom: none;
+  }
+  tr:nth-child(38) td {
+      border-bottom: none;
+  }
+  tr:nth-child(39) td {
+      border-bottom: none;
+  }
+  tr:nth-child(40) td {
+      border-bottom: none;
+  }
+  tr:nth-child(41) td {
+      border-bottom: none;
+  }
+  tr:nth-child(42) td {
+      border-bottom: none;
+  }
+  tr:nth-child(43) td {
+      border-bottom: none;
+  }
+  tr:nth-child(44) td {
+      border-bottom: none;
+  }
+  tr:nth-child(45) td {
+      border-bottom: none;
+  }
+  tr:nth-child(46) td {
+      border-bottom: none;
+  }
+  tr:nth-child(47) td {
+      border-bottom: none;
+  }
+  tr:nth-child(48) td {
+      border-bottom: none;
+  }
+  tr:nth-child(49) td {
+      border-bottom: none;
+  }
+  tr:nth-child(50) td {
+      border-bottom: none;
+  }
+  tr:nth-child(53) td {
+      border-bottom: none;
+  }
+  tr:nth-child(54) td {
+      border-bottom: none;
+  }
+  tr:nth-child(55) td {
+      border-bottom: none;
+  }
+</style>
+
+</body>
+</html>
