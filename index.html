@@ -17,7 +17,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title> OpenCodeInterpreter: Integrating Code Generation with Execution and Refinement</title>
 
-  <link rel="icon" href="./static/images/mmmu_icon2.png">
+  <link rel="icon" href="./static/images/icon.png">
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
@@ -91,7 +91,7 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title is-bold">
-            <img src="static/images/mmmu_icon2.png" style="width:1em;vertical-align: middle" alt="Logo"/> 
+            <img src="static/images/icon.png" style="width:1em;vertical-align: middle" alt="Logo"/> 
             <span class="opencodeinterpreter" style="vertical-align: middle">OpenCodeInterpreter</span>
             </h1>
           <h2 class="subtitle is-3 publication-subtitle">
@@ -106,10 +106,19 @@
             <span class="author-block">Tianyu Zheng*<sup style="color:#6fbf73;">1</sup>,
             <span class="author-block">Ge Zhang*<sup style="color:#6fbf73;">1</sup><sup>,</sup><sup style="color: #ffac33;">2</sup>,</span>
             <span class="author-block">Tianhao Shen*<sup style="color:#6fbf73;">1</sup>,</span>
-            <span class="author-block">Xueling Liu<sup style="color:#6fbf73;">1</sup>,</span><br>
-            <span class="author-block">Bill Yuchen Lin<sup style="color:#ed4b82;">3</sup>,</span>
-            <span class="author-block">Jie Fu<sup style="color: #6fbf73;">1</sup><sup>,</sup><sup style="color: #0000ff;">4</sup>,</span>
-            <span class="author-block">Wenhu Chen<sup style="color:#ffac33;">2</sup>,</span>
+            <span class="author-block">Xueling Liu*<sup style="color:#6fbf73;">1</sup>,</span><br>
+            <span class="author-block">
+              <a href="https://yuchenlin.xyz/" style="text-decoration: none; color: inherit;">Bill Yuchen Lin<sup style="color:#ed4b82;">3</sup></a>,
+            </span>
+            
+            <span class="author-block">
+              <a href="https://bigaidream.github.io/" style="text-decoration: none; color: inherit;">Jie Fu<sup style="color: #007bff;">4</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://wenhuchen.github.io/" style="text-decoration: none; color: inherit;">Wenhu Chen<sup style="color:#ffac33;">2</sup></a>,
+            </span>
+            
+            
             <span class="author-block">
               <a href="https://xiangyue9607.github.io/" style="text-decoration: none; color: inherit;">Xiang Yue*<sup>†</sup><sup>,</sup><sup style="color: #ff0000;">5</sup></a>,
             </span>
@@ -133,6 +142,7 @@
             <span class="author-block">†Corresponding to:</span>
             <span class="author-block"><a href="mailto:xiangyue.work@gmail.com">xiangyue.work@gmail.com</a>,</span>
             <span class="author-block"><a href="mailto:zhengtianyu0428@gmail.com">zhengtianyu0428@gmail.com</a>,</span>
+            <span class="author-block"><a href="mailto:ge.zhang@uwaterloo.ca">ge.zhang@uwaterloo.ca</a>,</span>
             <!-- <span class="author-block"><a href="mailto:wenhuchen@uwaterloo.ca">wenhuchen@uwaterloo.ca</a></span> -->
           </div>
           
@@ -160,18 +170,18 @@
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://huggingface.co/datasets"
+                <a href="https://huggingface.co/collections/m-a-p/opencodeinterpreter-65d312f6f88da990a64da456"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <!-- <i class="far fa-images"></i> -->
                       <p style="font-size:18px">🤗</p>
                       <!-- 🔗 -->
                   </span>
-                  <span>Dataset</span>
+                  <span>Models</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://github.com/"
+                <a href="https://github.com/OpenCodeInterpreter/OpenCodeInterpreter"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -207,12 +217,12 @@
               </span>
               <!-- EvalAI Link. -->
               <span class="link-block">
-                <a href="#examples"
+                <a href="#example"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon has-text-white">
                     <i class="fa-solid fa-book"></i>
                   </span>
-                  <span>Examples</span>
+                  <span>Example</span>
                 </a>
               </span>
             </div>
@@ -282,7 +292,7 @@
 <section class="hero is-light is-small">
   <div class="hero-body has-text-centered">
   <h1 class="title is-1 mmmu">
-    <img src="static/images/mmmu_icon2.png" style="width:1em;vertical-align: middle" alt="Logo"/>
+    <img src="static/images/icon.png" style="width:1em;vertical-align: middle" alt="Logo"/>
     <span class="mmmu" style="vertical-align: middle">OpenCodeInterpreter</span>
   </h1>
   </div>
@@ -1555,9 +1565,23 @@
           </div>
         </div>
     </div>
-  <!-------------------------------------------------------------------- RESULTS SECTION -------------------------------------------------------------------->
+<!-------------------------------------------------------------------- Case Study-------------------------------------------------------------------->
+
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-full-width has-text-centered"> -->
+      <div class="column is-four-fifths">
+        <h2 class="title is-3" id="example">Example</h2>
+        <div class="content has-text-justified">
+          <!-- <p>
+            OpenCodeInterpreter's innovative integration of execution and human feedback marks a significant leap forward in the domain. By harnessing compiler diagnostics to correct errors and incorporating human insights for code refinement, OpenCodeInterpreter achieves an unparalleled balance of accuracy and user alignment. Its performance on widely recognized benchmarks, including HumanEval and MBPP, demonstrates its superior ability to iteratively refine code, achieving results that narrow the performance gap with proprietary systems like GPT-4's Code Interpreter. OpenCodeInterpreter thus heralds a new era in code generation, offering open-source systems that rival the sophistication and efficacy of their proprietary counterparts.          
+          </p> -->
+        </div>
+    </div>
+    </div>
+
   </div>
 </section>
+
 
 
 <!-- @PAN TODO: bibtex -->
