@@ -29,8 +29,6 @@
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="stylesheet" href="./static/css/leaderboard.css">
 
-  <!-- <link href="https://unpkg.com/tabulator-tables@5.5.2/dist/css/tabulator_bulma.min.css" rel="stylesheet">
-  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.2/dist/js/tabulator.min.js"></script> -->
   <script type="text/javascript" src="static/js/sort-table.js" defer></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -96,13 +94,8 @@
             </h1>
           <h2 class="subtitle is-3 publication-subtitle">
             Integrating Code Generation with Execution and Refinement 
-            <!-- <br> -->
-            <!-- and Reasoning Benchmark for Expert AGI -->
           </h2>
           <div class="is-size-5 publication-authors">
-            <!-- <span class="author-block">Xiang Yue*<sup style="color:#6fbf73;">†,1</sup>,</span> -->
-            
-            <!-- <span class="author-block">Kai Zhang*<sup style="color:#ed4b82;">3</sup>,</span> -->
             <span class="author-block">Tianyu Zheng*<sup style="color:#6fbf73;">1</sup>,
             <span class="author-block">Ge Zhang*<sup style="color:#6fbf73;">1</sup><sup>,</sup><sup style="color: #ffac33;">2</sup>,</span>
             <span class="author-block">Tianhao Shen*<sup style="color:#6fbf73;">1</sup>,</span>
@@ -143,7 +136,6 @@
             <span class="author-block"><a href="mailto:xiangyue.work@gmail.com">xiangyue.work@gmail.com</a>,</span>
             <span class="author-block"><a href="mailto:zhengtianyu0428@gmail.com">zhengtianyu0428@gmail.com</a>,</span>
             <span class="author-block"><a href="mailto:ge.zhang@uwaterloo.ca">ge.zhang@uwaterloo.ca</a>,</span>
-            <!-- <span class="author-block"><a href="mailto:wenhuchen@uwaterloo.ca">wenhuchen@uwaterloo.ca</a></span> -->
           </div>
           
 
@@ -252,15 +244,6 @@
   </style>
 <section class="hero teaser">
   <div class="container is-max-desktop">
-    <!-- <div class="hero-body">
-      <img src="static/images/tease_scores.png" alt="Examples from the dataset"/>
-      <h2 class="subtitle has-text-centered">
-        <span class="dnerf">Nerfies</span> turns selfie videos from your phone into
-        free-viewpoint
-        portraits.
-      </h2>
-    </div> -->
-      <!-- <div class="box m-5"> -->
         <div class="content has-text-centered">
           <img src="static/images/figure1.png" alt="geometric reasoning" width="100%"/>
           <p> Overview of the OpenCodeInterpreter and its pass@1 accuracy on the HumanEval. With appropriate feedback, OpenCodeInterpreter-DS-33B achieves performance comparable to that of the GPT-4 Code Interpreter. </p>
@@ -288,7 +271,6 @@
         <div class="content has-text-justified">
           <p>
             The introduction of large language models has significantly advanced code generation. However, open-source models often lack the execution capabilities and iterative refinement of advanced systems like the GPT-4 Code Interpreter. To address this, we introduce OpenCodeInterpreter, a family of open-source code systems designed for generating, executing, and iteratively refining code. Supported by Code-Feedback, a dataset featuring 68K multi-turn interactions, OpenCodeInterpreter integrates execution and human feedback for dynamic code refinement. Our comprehensive evaluation of OpenCodeInterpreter across key benchmarks such as HumanEval, MBPP, and their enhanced versions from EvalPlus reveals its exceptional performance. Notably, OpenCodeInterpreter-33B achieves an accuracy of 83.2 (76.4) on the average (and plus versions) of HumanEval and MBPP, closely rivaling GPT-4's 84.2 (76.2) and further elevates to 91.6 (84.6) with synthesized human feedback from GPT-4. OpenCodeInterpreter brings the gap between open-source code generation models and proprietary systems like GPT-4 Code Interpreter.
-            <!-- We introduce MMMU: a new benchmark designed to evaluate multimodal models on massive multi-discipline tasks demanding college-level subject knowledge and deliberate reasoning. MMMU includes <b>11.5K</b> meticulously collected multimodal questions from college exams, quizzes, and textbooks, covering six core disciplines: Art & Design, Business, Science, Health & Medicine, Humanities & Social Science, and Tech & Engineering. These questions span <b>30</b> subjects and <b>183</b> subfields, comprising 30 highly heterogeneous image types, such as charts, diagrams, maps, tables, music sheets, and chemical structures. Unlike existing benchmarks, MMMU focuses on advanced perception and reasoning with domain-specific knowledge, challenging models to perform tasks akin to those faced by experts. Our evaluation of 14 open-source LMMs and the proprietary GPT-4V(ision) highlights the substantial challenges posed by MMMU. Even the advanced GPT-4V only achieves a 56% accuracy, indicating significant room for improvement. We believe MMMU will stimulate the community to build next-generation multimodal foundation models towards expert artificial general intelligence. -->
           </p>
         </div>
       </div>
@@ -307,13 +289,6 @@
   </div>
 </section>
 
-<!-- <section class="section">
-  <div class="container" style="margin-bottom: 2vh;">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Introduction</h2>
-        <div class="content has-text-justified">
-          <p> -->
             
 <section class="section">
   <div class="container">
@@ -325,8 +300,7 @@
           <p>
             Code generation has long been a cornerstone challenge in computer science, evolving significantly over the years from its initial reliance on symbolic methods to the recent revolutionary impact of large language models (LLMs). These LLMs, pre-trained on vast code corpora, have dramatically advanced the field by generating code that closely aligns with user intents, thereby offering substantial support for software development. As these models continue to evolve, they have become integral tools in automating and enhancing the coding process, exemplified by innovations such as GitHub Copilot. 
           </p>
-          <!-- <img src="static/images/figure3.png" alt="algebraic reasoning" class="center">
-          <br> -->
+
           <p>
             To further enhance the capabilities of pre-trained code models, instruction-tuning methods have been introduced. Among these, OpenCodeInterpreter stands out as a pioneering approach, leveraging a unique dataset named Code-Feedback. This dataset comprises 68K multi-turn interactions that include both user instructions and compiler feedback, enabling the model to not only generate but also refine code based on execution outputs and human guidance. Such advancements allow OpenCodeInterpreter to produce solutions that are not only technically sound but also closely aligned with user expectations, setting a new standard in code generation. 
           </p>
@@ -403,7 +377,8 @@
               <span class="leaderboard-label" style="background-color: #a0c4ff;">Our Methods</span>
             </div>
 
-            <table id="table1" class="js-sort-table">
+            <div style="overflow-x: auto;">
+            <table id="table1" class="js-sort-table" style="min-width: 100%;">
               <thead>
               <tr>
               <th style="text-align: center; vertical-align: middle;" rowspan="2">Model</th>
@@ -1571,6 +1546,7 @@
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
     </div>
@@ -2948,6 +2924,7 @@ function sortTable(table, column, type, asc) {
     font-size: 14px;
     border-left: none;
     border-right: none;
+    overflow-x: auto; /* 将 overflow-x 设置为 auto */
   }
 
   th, td {
