@@ -139,6 +139,7 @@
           </div>
           
 
+          <!-- <div class="column has-text-centered" style="overflow-x: auto;"> -->
           <div class="column has-text-centered">
             <div class="publication-links">
               <!-- PDF Link. -->
@@ -2884,6 +2885,19 @@ function sortTable(table, column, type, asc) {
 </script>
 
 <style>
+  .publication-links {
+    /* 在默认情况下，水平排列 */
+    display: flex;
+  }
+
+  /* 在屏幕宽度小于600px时，竖直排列 */
+  @media only screen and (max-width: 600px) {
+    .publication-links {
+      display: flex;
+      flex-direction: column; /* 将元素竖直排列 */
+    }
+  }
+
   .hidden {
       display: none;
   }
